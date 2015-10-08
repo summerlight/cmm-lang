@@ -1,0 +1,37 @@
+function add(arg1, arg2)
+{
+	return arg1+arg2;
+}
+
+function subtract(arg1, arg2)
+{
+	return arg1-arg2;
+}
+
+function multiply(arg1, arg2)
+{
+	return arg1*arg2;
+}
+
+function division(arg1, arg2)
+{
+	return arg1/arg2;
+}
+
+function main()
+{
+	local add2 = operatorFactory(2, add);
+	local sub3 = operatorFactory(3, subtract);
+	local mul15 = operatorFactory(1.5, multiply);
+	local div4 = operatorFactory(0.4, division);
+	
+	print(add2(5));
+	print(sub3(3.4));
+	print(mul15(2));
+	print(div4(3.2));
+}
+
+function operatorFactory(arg1, func)
+{
+	return function(arg2) { return func(arg1, arg2); };
+}

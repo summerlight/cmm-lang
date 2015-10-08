@@ -1,0 +1,62 @@
+function main()
+{
+	local closure1 = closureTest();
+	local closure2 = closureTest();
+	
+	local closure1_1 = closure1();
+	local closure1_2 = closure1();
+	
+	local closure2_1 = closure2();
+	local closure2_2 = closure2();
+	
+	local print1_1_1 = closure1_1();
+	local print1_1_2 = closure1_1();
+	
+	local print1_2_1 = closure1_2();
+	local print1_2_2 = closure1_2();
+	
+	local print2_1_1 = closure2_1();
+	local print2_1_2 = closure2_1();
+	
+	local print2_2_1 = closure2_2();
+	local print2_2_2 = closure2_2();
+	
+	print1_1_1();
+	print1_1_2();
+	print1_1_1();
+	print1_1_2();
+	
+	print1_2_1();
+	print1_2_2();
+	print1_2_1();
+	print1_2_2();
+	
+	print2_1_1();
+	print2_1_2();
+	print2_1_1();
+	print2_1_2();
+	
+	print2_2_1();
+	print2_2_2();
+	print2_2_1();
+	print2_2_2();
+}
+
+function closureTest() {
+	local a = 0;
+	return function() {
+		local b = 0;
+		return function() {
+			local c = 0;
+			return function() {
+				a += 1;
+				b += 2;
+				c += 3;
+				print(a);
+				print(b);
+				print(c);
+				print("\n");
+			};
+		};
+	};
+}

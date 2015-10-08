@@ -1,0 +1,47 @@
+function main() {
+	local arr = array { 3, 5, 2, 1, 6, 4 };
+	
+	for (local i = 0; i < sizeof(arr); i++) {
+		print(arr[i]);
+	}
+	print("\n");
+	
+	quick_sort(arr);
+	
+	for (local i = 0; i < sizeof(arr); i++) {
+		print(arr[i]);
+	}
+	print("\n");
+}
+
+function quick_sort(arr)
+{
+	local array_size = sizeof(arr);
+	
+	if (array_size <= 1) {
+		return;
+	}
+	
+	local less = array, greater = array;
+	local less_size = 0, greater_size = 0;
+	local pivot_index = array_size / 2;
+	local pivot_value = arr[pivot_index];
+	
+	for (local i = 0; i < array_size; i++) {
+		if (i == pivot_index) {
+			continue;
+		}		
+		if (arr[i] < arr[pivot_index]) {
+			less[less_size++] = arr[i];
+		} else {
+			greater[greater_size++] = arr[i];
+		}
+	}
+	
+	quick_sort(less);
+	quick_sort(greater);
+	
+	for (local i = 0; i < less_size; i++) { arr[i] = less[i]; }
+	arr[less_size] = pivot_value;
+	for (local i = 0; i < greater_size; i++) { arr[i+less_size+1] = greater[i]; }
+}

@@ -146,6 +146,51 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Analyzer.cpp" />
+    <ClCompile Include="AST.cpp" />
+    <ClCompile Include="ASTDrawer.cpp" />
+    <ClCompile Include="CodeGenerator.cpp" />
+    <ClCompile Include="CodePrinter.cpp" />
+    <ClCompile Include="Compiler.cpp" />
+    <ClCompile Include="Context.cpp" />
+    <ClCompile Include="DataType.cpp" />
+    <ClCompile Include="Error.cpp" />
+    <ClCompile Include="Function.cpp" />
+    <ClCompile Include="Instruction.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="Prototype.cpp" />
+    <ClCompile Include="Scanner.cpp" />
+    <ClCompile Include="StdAfx.cpp" />
+    <ClCompile Include="TextLoader.cpp" />
+    <ClCompile Include="Token.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Analyzer.h" />
+    <ClInclude Include="AST.h" />
+    <ClInclude Include="ASTDecl.h" />
+    <ClInclude Include="ASTDrawer.h" />
+    <ClInclude Include="ASTVisitor.h" />
+    <ClInclude Include="cmm.h" />
+    <ClInclude Include="CodeGenerator.h" />
+    <ClInclude Include="CodePrinter.h" />
+    <ClInclude Include="Compiler.h" />
+    <ClInclude Include="Context.h" />
+    <ClInclude Include="DataType.h" />
+    <ClInclude Include="Error.h" />
+    <ClInclude Include="Instruction.h" />
+    <ClInclude Include="Memory.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Parser.h" />
+    <ClInclude Include="Position.h" />
+    <ClInclude Include="Prototype.h" />
+    <ClInclude Include="Scanner.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="TextLoader.h" />
+    <ClInclude Include="Token.h" />
+    <ClInclude Include="Utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

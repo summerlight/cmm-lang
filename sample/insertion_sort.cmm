@@ -1,0 +1,37 @@
+function main() {
+	local arr = array { 3, 5, 2, 1, 6, 4 };
+	
+	for (local i = 0; i < sizeof(arr); i++) {
+		print(arr[i]);
+	}
+	print("\n");
+	
+	insertion_sort(arr);
+	
+	for (local i = 0; i < sizeof(arr); i++) {
+		print(arr[i]);
+	}
+	print("\n");
+}
+
+function insertion_sort(arr)
+{
+	local array_size = sizeof(arr);
+	
+	for (local i = 1; i < array_size; i++) {
+		local value = arr[i];
+		local j = i - 1;
+		do {
+			if (arr[j] > value) {
+				arr[j+1] = arr[j];
+				j -= 1;
+				if (j < 0) {
+					break;
+				}
+			} else {
+				break;
+			}
+		} while (true);
+		arr[j+1] = value;
+	}
+}

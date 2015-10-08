@@ -1,0 +1,14 @@
+function main()
+{
+	print(최대공약수(20, 6));
+}
+
+// Greatest common division
+// 최대 공약수를 구하는 함수
+function 최대공약수(큰수, 작은수)
+{
+	if (작은수 == 0)
+		return 큰수;
+	else /* 실제 계산 루틴 */
+		return 최대공약수(작은수, 큰수 % 작은수);
+}

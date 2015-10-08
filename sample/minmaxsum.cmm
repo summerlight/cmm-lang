@@ -1,0 +1,57 @@
+function main()
+{
+	a = array { 2132, 23.1411f, -4124.412, 212.f, 482e-3, 112e5, .414e1f, 0x142E };
+	
+	print(array_sum(a));
+	print(array_max(a));
+	print(array_min(a));
+	print(a[1]);
+	print(a[2]);
+	print(a[3]);
+}
+
+function array_sum(arr)
+{
+	local array_size = sizeof(arr);
+	
+	local sum = 0;
+
+	for (local i = 0; i < array_size; i++) {
+		sum += arr[i];
+	}	
+	return sum;
+}
+
+function array_max(arr)
+{
+	local array_size = sizeof(arr);
+	
+	if (array_size == 0)
+		return;
+	
+	local max = arr[0];
+	
+	for (local i = 0; i < array_size; i++) {
+		if (max < arr[i]) {
+			max = arr[i];
+		}
+	}
+	return max;
+}
+
+function array_min(arr)
+{
+	local array_size = sizeof(arr);
+	
+	if (array_size == 0)
+		return;
+		
+	local min = arr[0];
+	
+	for (local i = 0; i < array_size; i++) {
+		if (min > arr[i]) {
+			min = arr[i];
+		}
+	}
+	return min;
+}

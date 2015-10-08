@@ -1,17 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="ASTDrawer.cpp" />
+    <ClCompile Include="CodeGenerator.cpp" />
+    <ClCompile Include="CodePrinter.cpp" />
+    <ClCompile Include="Compiler.cpp" />
+    <ClCompile Include="Context.cpp" />
+    <ClCompile Include="DataType.cpp" />
+    <ClCompile Include="Error.cpp" />
+    <ClCompile Include="Function.cpp" />
+    <ClCompile Include="Instruction.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="Prototype.cpp" />
+    <ClCompile Include="Scanner.cpp" />
+    <ClCompile Include="StdAfx.cpp" />
+    <ClCompile Include="TextLoader.cpp" />
+    <ClCompile Include="Token.cpp" />
+    <ClCompile Include="Analyzer.cpp" />
+    <ClCompile Include="AST.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ASTDrawer.h" />
+    <ClInclude Include="ASTVisitor.h" />
+    <ClInclude Include="cmm.h" />
+    <ClInclude Include="CodeGenerator.h" />
+    <ClInclude Include="CodePrinter.h" />
+    <ClInclude Include="Compiler.h" />
+    <ClInclude Include="Context.h" />
+    <ClInclude Include="DataType.h" />
+    <ClInclude Include="Error.h" />
+    <ClInclude Include="Instruction.h" />
+    <ClInclude Include="Memory.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Parser.h" />
+    <ClInclude Include="Position.h" />
+    <ClInclude Include="Prototype.h" />
+    <ClInclude Include="Scanner.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="TextLoader.h" />
+    <ClInclude Include="Token.h" />
+    <ClInclude Include="Utility.h" />
+    <ClInclude Include="Analyzer.h" />
+    <ClInclude Include="AST.h" />
+    <ClInclude Include="ASTDecl.h" />
   </ItemGroup>
 </Project>

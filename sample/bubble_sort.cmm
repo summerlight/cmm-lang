@@ -1,0 +1,31 @@
+function main() {
+	local arr = array { 3, 5, 2, 1, 6, 4 };
+	
+	for (local i = 0; i < sizeof(arr); i++) {
+		print(arr[i]);
+	}
+	print("\n");
+	
+	bubble_sort(arr);
+	
+	for (local i = 0; i < sizeof(arr); i++) {
+		print(arr[i]);
+	}
+	print("\n");
+}
+
+function bubble_sort(arr) {
+	local swap;
+	local array_size = sizeof(arr);
+	do {
+		swap = false;
+		for (local i = 0; i < array_size - 1; i++) {
+			if (arr[i] > arr[i+1]) {
+				local temp = arr[i+1];
+				arr[i+1] = arr[i];
+				arr[i] = temp;
+				swap = true;
+			}
+		}
+	} while (swap);
+}
