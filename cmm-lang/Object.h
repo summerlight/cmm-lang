@@ -13,9 +13,9 @@
 namespace cmm
 {
 
-const uint8_t GCFLAG_UNMARKED = 0x00;
-const uint8_t GCFLAG_MARKED = 0x01;
-const uint8_t GCFLAG_INVALID = 0x02;
+constexpr uint8_t GCFLAG_UNMARKED = 0x00;
+constexpr uint8_t GCFLAG_MARKED = 0x01;
+constexpr uint8_t GCFLAG_INVALID = 0x02;
 
 struct Variable;
 
@@ -33,7 +33,7 @@ class Object
 public:
 	void               addRef() const;
 	void               release() const;
-	const uint32_t     refCount() const;
+	uint32_t           refCount() const;
 
 protected:
 	explicit           Object(ObjectManager* manager);
@@ -152,6 +152,6 @@ private:
 	T* ptr_;
 };
 
-} // The end of namespace "cmm"
+} // namespace"cmm"
 
 #endif

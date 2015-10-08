@@ -26,7 +26,7 @@ void Analyzer::analyze(AST::FunctionDefinition& rootFunction)
 }
 
 
-inline const bool Analyzer::safeVisit_(AST::Base* host)
+inline bool Analyzer::safeVisit_(AST::Base* host)
 {
 	if (host == nullptr) {
 		return false;
@@ -364,28 +364,28 @@ AST::VariableStmt* ScopeManager::retrieveVariable(const std::wstring& identifier
 }
 
 
-const uint32_t ScopeManager::functionLevel() const
+uint32_t ScopeManager::functionLevel() const
 {
 	assert(functionStack_.size() > 0);
 	return functionStack_.size() - 1;
 }
 
-const uint32_t ScopeManager::numVariable() const
+uint32_t ScopeManager::numVariable() const
 {
 	return functionStack_.back().numVariable;
 }
 
-const uint32_t ScopeManager::loopLevel() const
+uint32_t ScopeManager::loopLevel() const
 {
 	const LoopStack_ &currentLoopStack = functionStack_.back().loopStack;
 		
 	return currentLoopStack.size();
 }
 
-const uint32_t ScopeManager::scopeLevel() const
+uint32_t ScopeManager::scopeLevel() const
 {
 	assert(scopeLevel_ >= 0);
 	return scopeLevel_;
 }
 
-} // The end of namespace "cmm"
+} // namespace"cmm"

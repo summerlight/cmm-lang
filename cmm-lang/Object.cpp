@@ -49,7 +49,7 @@ void Object::addRef() const
 	refCount_++;
 }
 
-const uint32_t Object::refCount() const
+uint32_t Object::refCount() const
 {
 	return refCount_;
 }
@@ -144,4 +144,4 @@ inline Object* ObjectManager::objectPtr_(Node* node)
 }
 
 
-} // The end of namespace "cmm"
+} // namespace "cmm"

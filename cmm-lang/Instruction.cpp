@@ -80,4 +80,4 @@ const Instruction::Type Instruction::type[] = {
 	TWO_OP,     // YIELD
 };
 
-} // The end of namespace "cmm"
+} // namespace "cmm"

@@ -24,4 +24,4 @@ void Prototype::forEachObject_(const std::function<void(const Object&)>& func)
 	);
 }
 
-} // The end of namespace "cmm"
+} // namespace"cmm"

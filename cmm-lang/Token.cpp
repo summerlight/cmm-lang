@@ -179,4 +179,4 @@ const std::wstring Token::LexemeTable_[] = {
 	L"<EOF>"
 };
 
-} // The end of namespace "cmm"
+} // namespace"cmm"

@@ -21,15 +21,15 @@ class Prototype : public Object
 	friend class CodeGenerator;
 
 public:
-	const uint32_t        functionLevel() const;
-	const uint32_t        numArgs() const;
-	const uint32_t        localSize() const;
-
-	const uint32_t        numPrototype() const;
-	const uint32_t        numConstant() const;
-	const uint32_t        numInstruction() const;
-
-	const Ref<Prototype>  localPrototype(const uint32_t index) const;
+	uint32_t              functionLevel() const;
+	uint32_t              numArgs() const;
+	uint32_t              localSize() const;
+                         
+	uint32_t              numPrototype() const;
+	uint32_t              numConstant() const;
+	uint32_t              numInstruction() const;
+                         
+	Ref<Prototype>        localPrototype(const uint32_t index) const;
 	const Variable&       constant(const uint32_t index) const;
 	const Instruction&    instruction(const uint32_t offset) const;
 	
@@ -39,8 +39,8 @@ private:
 	explicit              Prototype(ObjectManager* objectManager = nullptr);
 	                      ~Prototype();
 
-	                      Prototype(const Prototype&);
-	const Prototype&      operator=(const Prototype&);
+	                      Prototype(const Prototype&) = delete;
+	const Prototype&      operator=(const Prototype&) = delete;
 
 	typedef std::vector<Ref<Prototype>> PrototypeVector_;
 	typedef std::vector<Variable> VariableVector_;
@@ -61,37 +61,37 @@ inline Prototype::Prototype(ObjectManager* objectManager)
 }
 
 
-inline const uint32_t Prototype::functionLevel() const
+inline uint32_t Prototype::functionLevel() const
 {
 	return functionLevel_;
 }
 
-inline const uint32_t Prototype::numArgs() const
+inline uint32_t Prototype::numArgs() const
 {
 	return numArgs_;
 }
 
-inline const uint32_t Prototype::localSize() const
+inline uint32_t Prototype::localSize() const
 {
 	return localSize_;
 }
 
-inline const uint32_t Prototype::numPrototype() const
+inline uint32_t Prototype::numPrototype() const
 {
 	return localPrototypes_.size();
 }
 
-inline const uint32_t Prototype::numConstant() const
+inline uint32_t Prototype::numConstant() const
 {
 	return constants_.size();
 }
 
-inline const uint32_t Prototype::numInstruction() const
+inline uint32_t Prototype::numInstruction() const
 {
 	return code_.size();
 }
 
-inline const Ref<Prototype> Prototype::localPrototype(const uint32_t index) const
+inline Ref<Prototype> Prototype::localPrototype(const uint32_t index) const
 {
 	return localPrototypes_[index];
 }
@@ -107,6 +107,6 @@ inline const Instruction& Prototype::instruction(const uint32_t offset) const
 	return code_[offset];
 }
 
-} // The end of namespace "cmm"
+} // namespace "cmm"
 
 #endif

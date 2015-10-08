@@ -39,4 +39,4 @@ bool Variable::StrictEqual::operator() (const Variable& rhs, const Variable& lhs
 	}
 }
 
-} // The end of namespace "cmm"
+} // namespace "cmm"

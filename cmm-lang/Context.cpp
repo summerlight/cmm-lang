@@ -153,7 +153,7 @@ Context::~Context()
 }
 
 
-void Context::run(const uint32_t numArgs, const uint32_t numRets)
+void Context::run(uint32_t numArgs, uint32_t numRets)
 {
 	if (reentrant_ == true) {
 		throw Error(L"currently C-- does not support to reentrant active C-- context");
@@ -381,7 +381,7 @@ void Context::loop_()
 	}
 }
 
-void Context::functionCall_(Variable argValues[], const uint32_t numArgs, const uint32_t numRets)
+void Context::functionCall_(Variable argValues[], uint32_t numArgs, uint32_t numRets)
 {
 	Ref<Function> callee(static_cast<Function*>(argValues[0].v.obj));
 	Ref<Closure> closure(new Closure(callee->prototype(), callee->upperClosure(), &objectManager_));
@@ -398,7 +398,7 @@ void Context::functionCall_(Variable argValues[], const uint32_t numArgs, const 
 	callStack_.push_back(CallInfo_(std::move(callee), std::move(closure), &argValues[0], numRets, 0));
 }
 
-void Context::CfunctionCall_(Variable argValues[], const uint32_t numArgs, const uint32_t numRets)
+void Context::CfunctionCall_(Variable argValues[], uint32_t numArgs, uint32_t numRets)
 {
 	bufferSize_ = numArgs;
 	for (uint32_t i = 0; i < numArgs; i++) {
@@ -418,7 +418,7 @@ void Context::CfunctionCall_(Variable argValues[], const uint32_t numArgs, const
 	bufferSize_ = 0;
 }
 
-void Context::functionReturn_(Variable retValues[], const uint32_t numRets)
+void Context::functionReturn_(Variable retValues[], uint32_t numRets)
 {
 	assert(callStack_.empty() == false);
 	
@@ -435,19 +435,19 @@ void Context::functionReturn_(Variable retValues[], const uint32_t numRets)
 	callStack_.pop_back();
 }
 
-const uint32_t Context::stackSize()
+uint32_t Context::stackSize()
 {
 	return bufferSize_;
 }
 
-const Type Context::type(const uint32_t index) const
+Type Context::type(uint32_t index) const
 {
 	checkStackRange_(index);
 
 	return buffer_[index].t;
 }
 
-void Context::pop(const uint32_t number)
+void Context::pop(uint32_t number)
 {
 	for (uint32_t i = 0; i < number; i++) {
 		buffer_[--bufferSize_] = TypeNull;
@@ -467,26 +467,26 @@ void Context::pushNull()
 	buffer_[bufferSize_++] = TypeNull;
 }
 
-void Context::pushInt(const int32_t value)
+void Context::pushInt(int32_t value)
 {
 	checkStackOverflow_();
 	buffer_[bufferSize_++] = value;
 }
 
-const uint32_t Context::getInt(const uint32_t index) const
+uint32_t Context::getInt(uint32_t index) const
 {
 	checkStack_(index, TypeInt, L"integer");
 
 	return buffer_[index].v.i;
 }
 
-void Context::pushFloat(const float value)
+void Context::pushFloat(float value)
 {
 	checkStackOverflow_();
 	buffer_[bufferSize_++] = value;
 }
 
-const float Context::getFloat(const uint32_t index) const
+float Context::getFloat(uint32_t index) const
 {
 	checkStack_(index, TypeFloat, L"float");
 	
@@ -501,7 +501,7 @@ void Context::pushString(const wchar_t value[])
 	buffer_[bufferSize_++] = Variable(TypeString, newString);
 }
 
-const wchar_t* Context::getString(const uint32_t index) const
+const wchar_t* Context::getString(uint32_t index) const
 {
 	checkStack_(index, TypeString, L"string");
 
@@ -517,7 +517,7 @@ void Context::pushNewTable()
 	buffer_[bufferSize_++] = Variable(TypeTable, newTable);
 }
 
-void Context::pushTableValue(const uint32_t tablePos)
+void Context::pushTableValue(uint32_t tablePos)
 {
 	checkStack_(tablePos, TypeTable, L"table");
 
@@ -525,7 +525,7 @@ void Context::pushTableValue(const uint32_t tablePos)
 	buffer_.back() = table.getValue(buffer_.back());
 }
 
-void Context::setTableValue(const uint32_t tablePos)
+void Context::setTableValue(uint32_t tablePos)
 {
 	checkStack_(tablePos, TypeTable, L"table");
 
@@ -536,7 +536,7 @@ void Context::setTableValue(const uint32_t tablePos)
 	table.setValue(key, value);
 }
 
-const uint32_t Context::tableSize(const uint32_t tablePos) const
+uint32_t Context::tableSize(uint32_t tablePos) const
 {
 	checkStack_(tablePos, TypeTable, L"table");
 
@@ -552,7 +552,7 @@ void Context::pushNewArray()
 	buffer_[bufferSize_++] = Variable(TypeTable, newArray);
 }
 
-void Context::pushArrayValue(const uint32_t arrayPos, const uint32_t arrayIndex)
+void Context::pushArrayValue(uint32_t arrayPos, uint32_t arrayIndex)
 {
 	checkStack_(arrayPos, TypeArray, L"array");
 
@@ -560,7 +560,7 @@ void Context::pushArrayValue(const uint32_t arrayPos, const uint32_t arrayIndex)
 	buffer_[bufferSize_++] = array.getValue(arrayIndex);
 }
 
-void Context::setArrayValue(const uint32_t arrayPos, const uint32_t arrayIndex)
+void Context::setArrayValue(uint32_t arrayPos, uint32_t arrayIndex)
 {
 	checkStack_(arrayPos, TypeArray, L"array");
 
@@ -568,7 +568,7 @@ void Context::setArrayValue(const uint32_t arrayPos, const uint32_t arrayIndex)
 	array.setValue(arrayIndex, buffer_[--bufferSize_]);
 }
 
-const uint32_t Context::arraySize(const uint32_t arrayPos) const
+uint32_t Context::arraySize(uint32_t arrayPos) const
 {
 	checkStack_(arrayPos, TypeArray, L"array");
 
@@ -576,7 +576,7 @@ const uint32_t Context::arraySize(const uint32_t arrayPos) const
 	return array.size();
 }
 
-void Context::setGlobal(const uint32_t index, const wchar_t globalName[])
+void Context::setGlobal(uint32_t index, const wchar_t globalName[])
 {
 	checkStackRange_(index);
 
@@ -590,7 +590,7 @@ void Context::getGlobal(const wchar_t globalName[])
 	buffer_[bufferSize_++] = global_->getValue(Variable(TypeString, newString));
 }
 
-void Context::checkStack_(const uint32_t index, const Type type, const wchar_t typeName[]) const
+void Context::checkStack_(uint32_t index, Type type, const wchar_t typeName[]) const
 {
 	checkStackRange_(index);
 
@@ -599,7 +599,7 @@ void Context::checkStack_(const uint32_t index, const Type type, const wchar_t t
 	}
 }
 
-void Context::checkStackRange_(const uint32_t index) const
+void Context::checkStackRange_(uint32_t index) const
 {
 	if (index >= bufferSize_) {
 		throw Error(L"Communication stack index [%d] is out of range.", index);
@@ -614,4 +614,4 @@ void Context::checkStackOverflow_() const
 	}
 }
 
-} // The end of namespace "cmm"
+} // namespace"cmm"

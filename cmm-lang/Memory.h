@@ -36,8 +36,8 @@ union Value
 	CFunction  func;
 
 	Value() {}
-	Value(const int32_t i_num) : i(i_num) {}
-	Value(const float f_num)   : f(f_num) {}
+	Value(int32_t i_num)       : i(i_num) {}
+	Value(float f_num)         : f(f_num) {}
 	Value(Object* object)      : obj(object) {}
 	Value(CFunction function)  : func(function) {}
 };
@@ -67,15 +67,15 @@ struct Variable
 	Variable() {}
 
 	// Below constructors are intended to be constructed by implicit type conversion
-	Variable(const Type type)              : t(type) {}  // Responsibility of type checking is up to user.
-	Variable(const Type type, Object* ptr) : t(type), v(ptr) { v.obj->addRef(); }
-	Variable(const bool boolean)           : t(TypeInt), v(boolean) {} // Boolean value is represented by integer form (0, 1) in C--
-	Variable(const int32_t i_num)          : t(TypeInt), v(i_num) {}
-	Variable(const float f_num)            : t(TypeFloat), v(f_num) {}
-	Variable(CFunction func)               : t(TypeCFunc), v(func) {}
+	Variable(Type type)              : t(type) {}  // Responsibility of type checking is up to user.
+	Variable(Type type, Object* ptr) : t(type), v(ptr) { v.obj->addRef(); }
+	Variable(bool boolean)           : t(TypeInt), v(boolean) {} // Boolean value is represented by integer form (0, 1) in C--
+	Variable(int32_t i_num)          : t(TypeInt), v(i_num) {}
+	Variable(float f_num)            : t(TypeFloat), v(f_num) {}
+	Variable(CFunction func)         : t(TypeCFunc), v(func) {}
 
-	Variable(const Variable& rhs)          : t(rhs.t), v(rhs.v) { objectAddRef(); }
-	Variable(Variable&& rhs)               : t(rhs.t), v(rhs.v) { rhs.t = TypeNull; }
+	Variable(const Variable& rhs)    : t(rhs.t), v(rhs.v) { objectAddRef(); }
+	Variable(Variable&& rhs)         : t(rhs.t), v(rhs.v) { rhs.t = TypeNull; }
 
 	~Variable() { objectRelease(); }
 
@@ -135,5 +135,5 @@ inline void Variable::objectRelease() const {
 	}
 }
 
-} // The end of namespace "cmm"
+} // namespace "cmm"
 #endif

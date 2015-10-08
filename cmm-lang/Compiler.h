@@ -17,23 +17,22 @@ class Compiler
 public:
 	explicit          Compiler(ObjectManager& objectManager);
 	                  ~Compiler();
+                      Compiler(const Compiler&) = delete;
+    const Compiler&   operator=(const Compiler&) = delete;
 
 	std::wstring&     ASTString();
 	std::wstring&     byteCode();
 
-	Ref<Prototype>    compile(const wchar_t code[], const bool drawTree = false, const bool printCode = false);
+	Ref<Prototype>    compile(const wchar_t code[], bool drawTree = false, bool printCode = false);
 
 private:
-	                  Compiler(const Compiler&);
-	const Compiler&   operator=(const Compiler&);
-
 	ObjectManager     &objectManager_;
 
 	std::wstring      treeString_;
 	std::wstring      codeString_;
 };
 
-} // The end of namespace "cmm"
+} // namespace "cmm"
 
 
 

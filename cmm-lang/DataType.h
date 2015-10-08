@@ -22,6 +22,9 @@ public:
 	                     String(const wchar_t value[], ObjectManager* manager = nullptr);
 	                     String(const std::wstring& value, ObjectManager* manager = nullptr);
 
+                         String(const String&) = delete;
+    const String&        operator=(const String&) = delete;
+
 	const std::wstring&  value() const;
 	const uint32_t       hashCode() const;
 
@@ -30,11 +33,8 @@ public:
 	friend const bool    operator<=(const String& lhs, const String& rhs);
 
 private:
-	                     String(const String&);
-	const String&        operator=(const String&);
-
-	virtual              ~String();
-	virtual void         forEachObject_(const std::function<void(const Object&)>& func);
+	virtual              ~String() override;
+	virtual void         forEachObject_(const std::function<void(const Object&)>& func) override;
 
 	const uint32_t       calculateHashCode();
 
@@ -62,17 +62,16 @@ class Array : public Object
 {
 public:
 	explicit         Array(ObjectManager* manager);
+	                 Array(const Array&) = delete;
+	const Array&     operator=(const Array&) = delete;
 	
-	const Variable   getValue(const int32_t key) const;
-	const bool       setValue(const int32_t key, const Variable& value);
-	const uint32_t   size();
+	Variable         getValue(int32_t key) const;
+	bool             setValue(int32_t key, const Variable& value);
+	uint32_t         size();
 
 private:
-	                 Array(const Array&);
-	const Array&     operator=(const Array&);
-
-	virtual          ~Array();
-	virtual void     forEachObject_(const std::function<void(const Object&)>& func);
+    virtual          ~Array() override;
+	virtual void     forEachObject_(const std::function<void(const Object&)>& func) override;
 		
 	typedef std::vector<Variable> VarArray_;
 
@@ -86,17 +85,16 @@ class Table : public Object
 {
 public:
 	explicit         Table(ObjectManager* manager);
+	                 Table(const Table&) = delete;
+	const Table&     operator=(const Table&) = delete;
 	
-	const Variable   getValue(const Variable& key) const;
+	Variable         getValue(const Variable& key) const;
 	void             setValue(const Variable& key, const Variable& value);
-	const uint32_t   size();
+	uint32_t         size();
 
 private:
-	                 Table(const Table&);
-	const Table&     operator=(const Table&);
-
-	virtual          ~Table();
-	virtual void     forEachObject_(const std::function<void(const Object&)>& func);
+	virtual          ~Table() override;
+	virtual void     forEachObject_(const std::function<void(const Object&)>& func) override;
 
 	typedef std::unordered_map<Variable, Variable, Variable::Hash, Variable::StrictEqual>  VarTable_;	
 
@@ -109,22 +107,20 @@ class Prototype;
 class Closure : public Object
 {
 public:
-	explicit               Closure(const Ref<Prototype> prototype, Ref<Closure> upperClosure, ObjectManager* objectManager = nullptr);
-	                       ~Closure();
+	explicit               Closure(Ref<Prototype> prototype, Ref<Closure> upperClosure, ObjectManager* objectManager = nullptr);    	
+	                       Closure(const Closure&) = delete;
+	const Closure&         operator=(const Closure&) = delete;
 
-	Ref<Closure>           upperClosure();
-	const Ref<Closure>     upperClosure() const;
+    Ref<Closure>           upperClosure();
 
-	Variable&              upValue(const uint32_t functionLevel, const uint32_t offset);
+	Variable&              upValue(uint32_t functionLevel, uint32_t offset);
 
-	Variable&              local(const uint32_t offset);
-	const Variable&        local(const uint32_t offset) const;
+	Variable&              local(uint32_t offset);
+	const Variable&        local(uint32_t offset) const;
 
 private:
-	                       Closure(const Closure&);
-	const Closure&         operator=(const Closure&);
-
-	virtual void           forEachObject_(const std::function<void(const Object&)>& func);
+    virtual                ~Closure() override;
+	virtual void           forEachObject_(const std::function<void(const Object&)>& func) override;
 
 	const Ref<Prototype>   prototype_;
 	Ref<Closure>           upperClosure_;
@@ -137,18 +133,13 @@ inline Ref<Closure> Closure::upperClosure()
 	return upperClosure_.get();
 }
 
-inline const Ref<Closure> Closure::upperClosure() const
-{
-	return upperClosure_.get();
-}
-
-inline Variable& Closure::local(const uint32_t offset)
+inline Variable& Closure::local(uint32_t offset)
 {
 	assert(offset >= 0 && offset < local_.size());
 	return local_[offset];
 }
 
-inline const Variable& Closure::local(const uint32_t offset) const
+inline const Variable& Closure::local(uint32_t offset) const
 {
 	assert(offset >= 0 && offset < local_.size());
 	return local_[offset];
@@ -158,19 +149,17 @@ inline const Variable& Closure::local(const uint32_t offset) const
 class Function : public Object
 {
 public:
-	explicit              Function(const Ref<Prototype> prototype, Ref<Closure> upper, ObjectManager* manager = nullptr);
+	explicit              Function(Ref<Prototype> prototype, Ref<Closure> upper, ObjectManager* manager = nullptr);
+                          Function(const Function&) = delete;
+	const Function&       operator=(const Function&) = delete;
 
 	const Ref<Prototype>  prototype() const;
 
 	Ref<Closure>          upperClosure();
-	const Ref<Closure>    upperClosure() const;
 
 private:
-	                      Function(const Function&);
-	const Function&       operator=(const Function&);
-
-	virtual               ~Function();
-	virtual void          forEachObject_(const std::function<void(const Object&)>& func);
+	virtual               ~Function() override;
+	virtual void          forEachObject_(const std::function<void(const Object&)>& func) override;
 
 	const Ref<Prototype>  prototype_;
 	Ref<Closure>          upperClosure_;
@@ -181,13 +170,8 @@ inline Ref<Closure> Function::upperClosure()
 	return upperClosure_;
 }
 
-inline const Ref<Closure> Function::upperClosure() const
-{
-	return upperClosure_;
-}
 
 
-
-} // The end of namespace "cmm"
+} // namespace "cmm"
 
 #endif

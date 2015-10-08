@@ -11,48 +11,47 @@ namespace cmm
 
 class Error;
 
-const uint32_t SCANNER_TAP_SIZE = 8;
+constexpr uint32_t SCANNER_TAP_SIZE = 8;
 
 class Scanner
 {
 public:
-	explicit                Scanner();
-							~Scanner();
+	explicit          Scanner();
+					  ~Scanner();
+	                  Scanner(const Scanner&) = delete;
+	const Scanner&    operator=(const Scanner&) = delete;
 
-	const bool				load(const wchar_t code[]);
-	const bool				load(const wchar_t code[], const uint32_t codeSize);
-	const Token				scan();
+	bool			  load(const wchar_t code[]);
+	bool			  load(const wchar_t code[], const uint32_t codeSize);
+	Token			  scan();
 
 private:
-	                        Scanner(const Scanner&);
-	const Scanner&          operator=(const Scanner&);
+	Token::Type       scanToken_();
+	Token::Type       classifyKeyword_();
+	Token::Type       classifyNumber_();
+	Token::Type       scanFloat_(const uint32_t entryState);
 
-	const Token::Type       scanToken_();
-	const Token::Type       classifyKeyword_();
-	const Token::Type       classifyNumber_();
-	const Token::Type       scanFloat_(const uint32_t entryState);
+	Token::Type       processString_();
+	bool              processEscapeSequence_();
 
-	const Token::Type       processString_();
-	const bool              processEscapeSequence_();
+	void              processCurrentChar_();
+	void              skipCurrentChar_();
+	void              replaceCurrentChar_(const wchar_t replacement);
 
-	void                    processCurrentChar_();
-	void                    skipCurrentChar_();
-	void                    replaceCurrentChar_(const wchar_t replacement);
+	void              skipBlankAndComment_();
 
-	void                    skipBlankAndComment_();
+	wchar_t           currentChar_();
+	wchar_t           lookForward_(uint32_t n);
 
-	const wchar_t           currentChar_();
-	const wchar_t           lookForward_(const uint32_t n);
-
-	const wchar_t           *code_;
-	uint32_t                codeSize_;
-	std::wstring            currentLexeme_;
-	uint32_t                currentOffset_;
-	uint32_t                currentLine_;
-	uint32_t                currentCol_;
-	bool                    isScanning_;
+	const wchar_t     *code_;
+	uint32_t          codeSize_;
+	std::wstring      currentLexeme_;
+	uint32_t          currentOffset_;
+	uint32_t          currentLine_;
+	uint32_t          currentCol_;
+	bool              isScanning_;
 };
 
-} // The end of namespace "cmm"
+} // namespace"cmm"
 
 #endif

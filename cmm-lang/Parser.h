@@ -45,7 +45,7 @@ private:
 	StatementPtr       parseVariableStatement_();
 	StatementPtr       parseVariable_();
 
-	StmtSequencePtr    parseStmtSequence_(const Token::Type delimiter);
+	StmtSequencePtr    parseStmtSequence_(Token::Type delimiter);
 
 	ExpressionPtr      parseExpression_();
 	ExpressionPtr      parseAssignmentExpr_();
@@ -72,13 +72,13 @@ private:
 		
 	FunctionDefPtr     parseFunctionDef_();
 
-	ExpressionPtr      newIntegerTerminal_(const uint32_t integer);
+	ExpressionPtr      newIntegerTerminal_(uint32_t integer);
 	
 	Scanner            scanner_;
 	Token              currentToken_;
 	Position           tempPosition_;
 };
 
-} // The end of namespace "cmm"
+} // namespace "cmm"
 
 #endif

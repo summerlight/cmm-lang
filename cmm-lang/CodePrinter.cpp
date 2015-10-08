@@ -29,7 +29,7 @@ std::wstring& CodePrinter::print(const Prototype& prototype)
 	return output_;
 }
 
-void CodePrinter::appendPrototype_(const Prototype& prototype, const uint32_t prototypeNum)
+void CodePrinter::appendPrototype_(const Prototype& prototype, uint32_t prototypeNum)
 {
 	appendPrototypeInfo_(prototype, prototypeNum);
 	
@@ -53,7 +53,7 @@ void CodePrinter::appendPrototype_(const Prototype& prototype, const uint32_t pr
 	appendPrototypeEnd_();
 }
 
-void CodePrinter::appendPrototypeInfo_(const Prototype& prototype, const uint32_t prototypeNum)
+void CodePrinter::appendPrototypeInfo_(const Prototype& prototype, uint32_t prototypeNum)
 {
 	appendIndention_();
 	append_(L"; function [%02d] definition\n", prototypeNum);
@@ -75,7 +75,7 @@ void CodePrinter::appendPrototypeEnd_()
 	append_(L"}\n");
 }
 
-void CodePrinter::appendCode_(const Instruction& inst, const uint32_t offset)
+void CodePrinter::appendCode_(const Instruction& inst, uint32_t offset)
 {
 	appendIndention_();
 	append_(L"code[%02d] = ", offset);		
@@ -95,7 +95,7 @@ void CodePrinter::appendCode_(const Instruction& inst, const uint32_t offset)
 	append_(L"\n");
 }
 
-void CodePrinter::appendConstant_(const Variable& constant, const uint32_t constNum)
+void CodePrinter::appendConstant_(const Variable& constant, uint32_t constNum)
 {
 	appendIndention_();
 	append_(L"const[%02d] = ", constNum);
@@ -133,4 +133,4 @@ void CodePrinter::append_(const wchar_t format[], ...)
 	output_.append(buffer);
 }
 
-} // The end of namespace "cmm"
+} // namespace "cmm"

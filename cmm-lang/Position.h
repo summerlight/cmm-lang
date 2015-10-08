@@ -11,7 +11,7 @@ struct Position
 {
 public:
 	Position();
-	Position(const uint32_t fromLine, const uint32_t toLine, const uint32_t fromCol, const uint32_t toCol);
+	Position(uint32_t fromLine, uint32_t toLine, uint32_t fromCol, uint32_t toCol);
 	Position(const Position& from, const Position& to);
 
 	// Generally, below member variables should be private member.
@@ -35,7 +35,7 @@ inline Position::Position(const Position& from, const Position& to)
 	// Intentionally empty function
 }
 
-inline Position::Position(const uint32_t fromLine, const uint32_t toLine, const uint32_t fromCol, const uint32_t toCol)
+inline Position::Position(uint32_t fromLine, uint32_t toLine, uint32_t fromCol, uint32_t toCol)
 	: startLine(fromLine), endLine(toLine), startCol(fromCol), endCol(toCol)
 {
 	assert (fromLine >= 0 && toLine >= 0);

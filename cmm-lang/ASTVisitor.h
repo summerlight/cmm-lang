@@ -35,9 +35,9 @@ public:
 	virtual void visit(TableExpr& tableExpr) = 0;
 };
 
-} // The end of namespace "AST"
+} // namespace "AST"
 
-} // The end of namespace "cmm"
+} // namespace "cmm"
 
 #endif
 

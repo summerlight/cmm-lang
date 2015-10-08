@@ -56,7 +56,7 @@ struct Instruction
 	Instruction(const Instruction& inst)
 		: opcode(inst.opcode), operand1(inst.operand1), operand2(inst.operand2), operand3(inst.operand3) {}
 
-	Instruction(const int32_t opcode, const int32_t op1, const int32_t op2, const int32_t op3)
+	Instruction(int32_t opcode, int32_t op1, int32_t op2, int32_t op3)
 	: opcode(opcode), operand1(op1), operand2(op2), operand3(op3) {}
 
 	int32_t   opcode;
@@ -71,6 +71,6 @@ struct Instruction
 
 
 
-} // The end of namespace "cmm"
+} // namespace "cmm"
 
 #endif

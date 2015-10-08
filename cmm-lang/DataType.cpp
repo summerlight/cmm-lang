@@ -74,7 +74,7 @@ Array::~Array()
 	// Unref: if a value is an object	
 }
 
-const Variable Array::getValue(const int32_t key) const
+Variable Array::getValue(const int32_t key) const
 {
 	if (key < 0 || static_cast<uint32_t>(key) >= array_.size()) {
 		return Variable(TypeNull);
@@ -83,7 +83,7 @@ const Variable Array::getValue(const int32_t key) const
 	return array_[key];
 }
 
-const bool Array::setValue(const int32_t key, const Variable& value)
+bool Array::setValue(const int32_t key, const Variable& value)
 {
 	// Ref: if a value is an object
 	if (key < 0) { return false; }
@@ -96,7 +96,7 @@ const bool Array::setValue(const int32_t key, const Variable& value)
 	return true;
 }
 
-const uint32_t Array::size()
+uint32_t Array::size()
 {
 	return array_.size();
 }
@@ -122,7 +122,7 @@ Table::~Table()
 	// Unref : if a key or a value is an object
 }
 
-const Variable Table::getValue(const Variable& key) const
+Variable Table::getValue(const Variable& key) const
 {
 	auto iter = table_.find(key);
 
@@ -149,7 +149,7 @@ void Table::setValue(const Variable& key, const Variable& value)
 	}
 }
 
-const uint32_t Table::size()
+uint32_t Table::size()
 {
 	return table_.size();
 }
@@ -171,4 +171,4 @@ void Table::forEachObject_(const std::function<void(const Object&)>& func)
 	);
 }
 
-} // The end of namespace "cmm"
+} // namespace "cmm"

@@ -20,6 +20,6 @@ private:
 
 };
 
-} // The end of namespace "cmm"
+} // namespace "cmm"
 
 #endif

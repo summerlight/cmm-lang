@@ -15,19 +15,19 @@ namespace cmm
 namespace AST
 {
 
-const uint32_t FLAG_NOTHING   = 0x00000000; // There is no information to be returned
-const uint32_t FLAG_ERROR     = 0x00000001; // An error has occurred in semantic analysis process
-const uint32_t FLAG_LVALUE    = 0x00000002; // An expression is not l-value, then it is r-value
-const uint32_t FLAG_STORE     = 0x00000004; // An expression is modified by assign, inc or dec operation if it is l-value
-const uint32_t FLAG_LOAD      = 0x00000008; // The result value needs to be loaded to temporary register even if it has non temporary register
-const uint32_t FLAG_NOLOAD    = 0x00000010; // The result value does not need to be loaded because it is lhs in assign operation.
-const uint32_t FLAG_TABLE     = 0x00000020; // An expression is a table value
-const uint32_t FLAG_GLOBAL    = 0x00000040; // An expression is a global variable
-const uint32_t FLAG_UPVALUE   = 0x00000080; // An expression is an upvalue variable
-const uint32_t FLAG_INTVALUE  = 0x00000100; // An expression is an integer terminal
-const uint32_t FLAG_ARRAY     = 0x00000200; // A table initializer does not has a key or its key is an integer terminal
-const uint32_t FLAG_TEMP      = 0x00000400; // The result of an expression is located on temporary register
-const uint32_t FLAG_TEMPTABLE = 0x00000800; // The table and key value of an expression is located on temporary register
+constexpr uint32_t FLAG_NOTHING   = 0x00000000; // There is no information to be returned
+constexpr uint32_t FLAG_ERROR     = 0x00000001; // An error has occurred in semantic analysis process
+constexpr uint32_t FLAG_LVALUE    = 0x00000002; // An expression is not l-value, then it is r-value
+constexpr uint32_t FLAG_STORE     = 0x00000004; // An expression is modified by assign, inc or dec operation if it is l-value
+constexpr uint32_t FLAG_LOAD      = 0x00000008; // The result value needs to be loaded to temporary register even if it has non temporary register
+constexpr uint32_t FLAG_NOLOAD    = 0x00000010; // The result value does not need to be loaded because it is lhs in assign operation.
+constexpr uint32_t FLAG_TABLE     = 0x00000020; // An expression is a table value
+constexpr uint32_t FLAG_GLOBAL    = 0x00000040; // An expression is a global variable
+constexpr uint32_t FLAG_UPVALUE   = 0x00000080; // An expression is an upvalue variable
+constexpr uint32_t FLAG_INTVALUE  = 0x00000100; // An expression is an integer terminal
+constexpr uint32_t FLAG_ARRAY     = 0x00000200; // A table initializer does not has a key or its key is an integer terminal
+constexpr uint32_t FLAG_TEMP      = 0x00000400; // The result of an expression is located on temporary register
+constexpr uint32_t FLAG_TEMPTABLE = 0x00000800; // The table and key value of an expression is located on temporary register
 
 class Visitor;
 
@@ -45,7 +45,7 @@ struct Base
 struct Statement : public Base
 {
 	explicit             Statement();
-	virtual              ~Statement();
+	virtual              ~Statement() override;
 	virtual void         accept(Visitor& visitor) = 0;
 };
 
@@ -53,8 +53,8 @@ struct Statement : public Base
 struct StmtSequence : public Statement
 {
 	explicit             StmtSequence();
-	virtual              ~StmtSequence();
-	virtual void         accept(Visitor& visitor);
+	virtual              ~StmtSequence() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	typedef std::vector<StatementPtr> StatementVector;
 
@@ -65,7 +65,7 @@ struct StmtSequence : public Statement
 struct Expression : public Base
 {
 	explicit             Expression();
-	virtual              ~Expression();
+	virtual              ~Expression() override;
 	virtual void         accept(Visitor& visitor) = 0;
 
 	uint32_t             registerOffset;
@@ -81,8 +81,8 @@ struct Expression : public Base
 struct TableInitializer : public Base
 {
 	explicit             TableInitializer(ExpressionPtr key, ExpressionPtr value);
-	virtual              ~TableInitializer();
-	virtual void         accept(Visitor& visitor);
+	virtual              ~TableInitializer() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	ExpressionPtr        key;
 	ExpressionPtr        value;
@@ -94,8 +94,8 @@ struct TableInitializer : public Base
 struct FunctionDefinition : public Base
 {
 	explicit             FunctionDefinition(StmtSequencePtr args, StmtSequencePtr contents);
-	virtual              ~FunctionDefinition();
-	virtual void         accept(Visitor& visitor);
+	virtual              ~FunctionDefinition() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	typedef std::vector<VariableStmt*> VariableVector;
 
@@ -111,8 +111,8 @@ struct FunctionDefinition : public Base
 struct CompoundStmt : public Statement
 {
 	explicit             CompoundStmt(StmtSequencePtr contents);
-	virtual              ~CompoundStmt();
-	virtual void         accept(Visitor& visitor);
+	virtual              ~CompoundStmt() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	StmtSequencePtr      contents;
 	uint32_t             scopeLevel;
@@ -123,7 +123,7 @@ struct CompoundStmt : public Statement
 struct LoopStmt : public Statement
 {
 	explicit             LoopStmt();
-	virtual              ~LoopStmt();
+	virtual              ~LoopStmt() override;
 	virtual void         accept(Visitor& visitor) = 0;
 
 	uint32_t             continueLabel;
@@ -134,8 +134,8 @@ struct LoopStmt : public Statement
 struct ForStmt : public LoopStmt
 {
 	explicit             ForStmt(StatementPtr init, ExpressionPtr cond, StatementPtr iter, StatementPtr contents);
-	virtual              ~ForStmt();
-	virtual void         accept(Visitor& visitor);
+	virtual              ~ForStmt() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	StatementPtr         initial;
 	ExpressionPtr        condition;
@@ -147,8 +147,8 @@ struct ForStmt : public LoopStmt
 struct WhileStmt : public LoopStmt
 {
 	explicit             WhileStmt(ExpressionPtr cond, StatementPtr contents);
-	virtual              ~WhileStmt();
-	virtual void         accept(Visitor& visitor);
+	virtual              ~WhileStmt() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	ExpressionPtr        condition;
 	StatementPtr         contents;
@@ -158,8 +158,8 @@ struct WhileStmt : public LoopStmt
 struct DoWhileStmt : public LoopStmt
 {
 	explicit             DoWhileStmt(ExpressionPtr cond, StatementPtr contents);
-	virtual              ~DoWhileStmt();
-	virtual void         accept(Visitor& visitor);
+	virtual              ~DoWhileStmt() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	ExpressionPtr        condition;
 	StatementPtr         contents;
@@ -169,8 +169,8 @@ struct DoWhileStmt : public LoopStmt
 struct IfElseStmt : public Statement
 {
 	explicit             IfElseStmt(ExpressionPtr cond, StatementPtr ifContents, StatementPtr elseContents);
-	virtual              ~IfElseStmt();
-	virtual void         accept(Visitor& visitor);
+	virtual              ~IfElseStmt() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	ExpressionPtr        condition;
 	StatementPtr         ifContents;
@@ -184,9 +184,9 @@ struct ReturnStmt : public Statement
 		RETURN,
 		YIELD
 	};
-	explicit             ReturnStmt(const Type t, ExpressionPtr returnExpr);
-	virtual              ~ReturnStmt();
-	virtual void         accept(Visitor& visitor);
+	explicit             ReturnStmt(Type t, ExpressionPtr returnExpr);
+	virtual              ~ReturnStmt() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	Type                 type;
 	ExpressionPtr        returnExpr;
@@ -199,9 +199,9 @@ struct JumpStmt : public Statement
 		CONTINUE,
 		BREAK
 	};
-	explicit             JumpStmt(const Type t);
-	virtual              ~JumpStmt();
-	virtual void         accept(Visitor& visitor);
+	explicit             JumpStmt(Type t);
+	virtual              ~JumpStmt() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	Type                 type;
 	LoopStmt*            correspondingLoop;
@@ -211,8 +211,8 @@ struct JumpStmt : public Statement
 struct VariableStmt : public Statement
 {
 	explicit             VariableStmt(const std::wstring& name, ExpressionPtr init);
-	virtual              ~VariableStmt();
-	virtual void         accept(Visitor& visitor);
+	virtual              ~VariableStmt() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	std::wstring         name;
 	ExpressionPtr        init;
@@ -225,8 +225,8 @@ struct VariableStmt : public Statement
 struct ExpressionStmt : public Statement
 {
 	explicit             ExpressionStmt(ExpressionPtr expr);
-	virtual              ~ExpressionStmt();
-	virtual void         accept(Visitor& visitor);
+	virtual              ~ExpressionStmt() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	ExpressionPtr        expression;
 };
@@ -237,9 +237,9 @@ struct TrinaryExpr : public Expression
 	enum Operator {		
 		BRANCH         // cond ? branch1 : branch2
 	};
-	explicit             TrinaryExpr(const Operator op, ExpressionPtr first, ExpressionPtr second, ExpressionPtr third);
-	virtual              ~TrinaryExpr();
-	virtual void         accept(Visitor& visitor);
+	explicit             TrinaryExpr(Operator op, ExpressionPtr first, ExpressionPtr second, ExpressionPtr third);
+	virtual              ~TrinaryExpr() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	ExpressionPtr        first;
 	ExpressionPtr        second;
@@ -283,9 +283,9 @@ struct BinaryExpr : public Expression
 		INDEX,          // [ ]
 		ERR
 	};
-	explicit             BinaryExpr(const Operator op, ExpressionPtr first, ExpressionPtr second);
-	virtual              ~BinaryExpr();
-	virtual void         accept(Visitor& visitor);
+	explicit             BinaryExpr(Operator op, ExpressionPtr first, ExpressionPtr second);
+	virtual              ~BinaryExpr() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	ExpressionPtr        first;
 	ExpressionPtr        second;
@@ -305,9 +305,9 @@ struct UnaryExpr : public Expression
 		LOGIC_NOT,   // !
 		ERR
 	};
-	explicit             UnaryExpr(const Operator op, ExpressionPtr first);
-	virtual              ~UnaryExpr();
-	virtual void         accept(Visitor& visitor);
+	explicit             UnaryExpr(Operator op, ExpressionPtr first);
+	virtual              ~UnaryExpr() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	ExpressionPtr        first;
 	Operator             op;
@@ -324,9 +324,9 @@ struct TerminalExpr : public Expression
 		STRING,
 		IDENTIFIER
 	};
-	explicit             TerminalExpr(const Type t, const std::wstring& lexeme);
-	virtual              ~TerminalExpr();
-	virtual void         accept(Visitor& visitor);
+	explicit             TerminalExpr(Type t, const std::wstring& lexeme);
+	virtual              ~TerminalExpr() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	Type                 type;
 	std::wstring         lexeme;
@@ -337,8 +337,8 @@ struct TerminalExpr : public Expression
 struct CallExpr : public Expression
 {
 	explicit             CallExpr(ExpressionPtr function);
-	virtual              ~CallExpr();
-	virtual void         accept(Visitor& visitor);
+	virtual              ~CallExpr() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	typedef std::vector<ExpressionPtr> ArgumentVector;
 
@@ -350,8 +350,8 @@ struct CallExpr : public Expression
 struct FunctionExpr : public Expression
 {
 	explicit             FunctionExpr(FunctionDefPtr funcDef);
-	virtual              ~FunctionExpr();
-	virtual void         accept(Visitor& visitor);
+	virtual              ~FunctionExpr() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	FunctionDefPtr       functionDef;
 };
@@ -364,9 +364,9 @@ struct TableExpr : public Expression
 		ARRAY,
 		UNKNOWN
 	};
-	explicit             TableExpr(const Type t);
-	virtual              ~TableExpr();
-	virtual void         accept(Visitor& visitor);
+	explicit             TableExpr(Type t);
+	virtual              ~TableExpr() override;
+	virtual void         accept(Visitor& visitor) override;
 
 	typedef std::vector<TableInitPtr> InitializerVector;
 
@@ -375,9 +375,9 @@ struct TableExpr : public Expression
 };
 
 
-} // The end of namespace "AST"
+} // namespace "AST"
 
 
-} // The end of namespace "cmm"
+} // namespace "cmm"
 
 #endif

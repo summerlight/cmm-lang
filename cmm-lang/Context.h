@@ -15,57 +15,57 @@ namespace cmm
 class Context
 {
 public:
-	explicit          Context();
-	                  ~Context();
+	explicit        Context();
+	                ~Context();
 
-	void              load(const wchar_t code[]);
-	void              run(const uint32_t numArgs, const uint32_t numRets);
+	void            load(const wchar_t code[]);
+	void            run(uint32_t numArgs, uint32_t numRets);
 	
-	void              registerCfunction(const wchar_t name[], CFunction func);
+	void            registerCfunction(const wchar_t name[], CFunction func);
 
-	void              garbageCollect();
+	void            garbageCollect();
 
-	const uint32_t    stackSize();
+	uint32_t        stackSize();
+                  
+	Type            type(uint32_t index) const;
 
-	const Type        type(const uint32_t index) const;
+	void            pop(uint32_t number = 1);
+	void            clear();
 
-	void              pop(const uint32_t number = 1);
-	void              clear();
+	void            pushNull();
 
-	void              pushNull();
+	void            pushInt(int32_t value);
+	uint32_t        getInt(uint32_t index) const;
 
-	void              pushInt(const int32_t value);
-	const uint32_t    getInt(const uint32_t index) const;
+	void            pushFloat(float value);
+	float           getFloat(uint32_t index) const;
 
-	void              pushFloat(const float value);
-	const float       getFloat(const uint32_t index) const;
+	void            pushString(const wchar_t value[]);
+	const wchar_t*  getString(uint32_t index) const;
 
-	void              pushString(const wchar_t value[]);
-	const wchar_t*    getString(const uint32_t index) const;
-
-	void              pushNewTable();
-	void              pushTableValue(const uint32_t tablePos);
-	void              setTableValue(const uint32_t tablePos);
-	const uint32_t    tableSize(const uint32_t tablePos) const;
-
-	void              pushNewArray();
-	void              pushArrayValue(const uint32_t arrayPos, const uint32_t arrayIndex);
-	void              setArrayValue(const uint32_t arrayPos, const uint32_t arrayIndex);
-	const uint32_t    arraySize(const uint32_t arrayPos) const;
-
-	void              setGlobal(const uint32_t index, const wchar_t globalName[]);
-	void              getGlobal(const wchar_t globalName[]);
-
-private:
-	void              loop_();
-
-	void              functionCall_(Variable argValues[], const uint32_t numArgs, const uint32_t numRets);
-	void              CfunctionCall_(Variable argValues[], const uint32_t numArgs, const uint32_t numRets);
-	void              functionReturn_(Variable retValues[], const uint32_t numRets);
-
-	void              checkStack_(const uint32_t index, const Type type, const wchar_t typeName[]) const;
-	void              checkStackRange_(const uint32_t index) const;
-	void              checkStackOverflow_() const;
+	void            pushNewTable();
+	void            pushTableValue(uint32_t tablePos);
+	void            setTableValue(uint32_t tablePos);
+	uint32_t        tableSize(uint32_t tablePos) const;
+                   
+	void            pushNewArray();
+	void            pushArrayValue(uint32_t arrayPos, uint32_t arrayIndex);
+	void            setArrayValue(uint32_t arrayPos, uint32_t arrayIndex);
+	uint32_t        arraySize(uint32_t arrayPos) const;
+                   
+	void            setGlobal(uint32_t index, const wchar_t globalName[]);
+	void            getGlobal(const wchar_t globalName[]);
+                   
+private:           
+	void            loop_();
+                   
+	void            functionCall_(Variable argValues[], uint32_t numArgs, uint32_t numRets);
+	void            CfunctionCall_(Variable argValues[], uint32_t numArgs, uint32_t numRets);
+	void            functionReturn_(Variable retValues[], uint32_t numRets);
+                   
+	void            checkStack_(uint32_t index, Type type, const wchar_t typeName[]) const;
+	void            checkStackRange_(uint32_t index) const;
+	void            checkStackOverflow_() const;
 
 	struct CallInfo_
 	{

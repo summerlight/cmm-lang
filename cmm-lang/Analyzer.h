@@ -17,6 +17,8 @@ class ScopeManager
 public:
 	explicit                  ScopeManager();
 	                          ~ScopeManager();
+                              ScopeManager(const ScopeManager&) = delete;
+    const ScopeManager&       operator=(const ScopeManager&) = delete;
 
 	void                      openFunctionScope(AST::FunctionDefinition& functionDef);
 	void                      closeFunctionScope();	
@@ -29,14 +31,10 @@ public:
 	AST::LoopStmt*            retrieveNearestLoop();
 	AST::VariableStmt*        retrieveVariable(const std::wstring& identifier);
 
-	const uint32_t            functionLevel() const;
-	const uint32_t            numVariable() const;
-	const uint32_t            loopLevel() const;
-	const uint32_t            scopeLevel() const;
-
-private:
-	                          ScopeManager(const ScopeManager&);
-	const ScopeManager&       operator=(const ScopeManager&);
+	uint32_t                  functionLevel() const;
+	uint32_t                  numVariable() const;
+	uint32_t                  loopLevel() const;
+	uint32_t                  scopeLevel() const;
 
 	typedef std::vector<AST::LoopStmt*> LoopStack_;	
 	typedef std::vector<AST::VariableStmt*> VariableStack_;
@@ -63,42 +61,41 @@ class Analyzer : public AST::Visitor
 public:
 	explicit            Analyzer();
 	                    ~Analyzer();
+                        Analyzer(const Analyzer&) = delete;
+    const Analyzer&     operator=(const Analyzer&) = delete;
 
 	void                analyze(AST::FunctionDefinition& rootFunction);
 
-	virtual void        visit(AST::StmtSequence& stmtSequence);
-	virtual void        visit(AST::TableInitializer& tableInit);	
-	virtual void        visit(AST::FunctionDefinition& functionDef);
+	virtual void        visit(AST::StmtSequence& stmtSequence) override;
+	virtual void        visit(AST::TableInitializer& tableInit) override;
+	virtual void        visit(AST::FunctionDefinition& functionDef) override;
 
-	virtual void        visit(AST::CompoundStmt& compoundStmt);
-	virtual void        visit(AST::ForStmt& forStmt);
-	virtual void        visit(AST::WhileStmt& whileStmt);
-	virtual void        visit(AST::DoWhileStmt& doWhileStmt);
-	virtual void        visit(AST::IfElseStmt& ifElseStmt);	
-	virtual void        visit(AST::ReturnStmt& returnStmt);
-	virtual void        visit(AST::JumpStmt& jumpStmt);
-	virtual void        visit(AST::VariableStmt& variableStmt);
-	virtual void        visit(AST::ExpressionStmt& expressionStmt);
+	virtual void        visit(AST::CompoundStmt& compoundStmt) override;
+	virtual void        visit(AST::ForStmt& forStmt) override;
+	virtual void        visit(AST::WhileStmt& whileStmt) override;
+	virtual void        visit(AST::DoWhileStmt& doWhileStmt) override;
+	virtual void        visit(AST::IfElseStmt& ifElseStmt) override;
+	virtual void        visit(AST::ReturnStmt& returnStmt) override;
+	virtual void        visit(AST::JumpStmt& jumpStmt) override;
+	virtual void        visit(AST::VariableStmt& variableStmt) override;
+	virtual void        visit(AST::ExpressionStmt& expressionStmt) override;
 
-	virtual void        visit(AST::UnaryExpr& unaryExpr);
-	virtual void        visit(AST::BinaryExpr& binaryExpr);
-	virtual void        visit(AST::TrinaryExpr& trinaryExpr);
-	virtual void        visit(AST::TerminalExpr& terminalExpr);
-	virtual void        visit(AST::CallExpr& callExpr);
-	virtual void        visit(AST::FunctionExpr& functionExpr);
-	virtual void        visit(AST::TableExpr& tableExpr);
+	virtual void        visit(AST::UnaryExpr& unaryExpr) override;
+	virtual void        visit(AST::BinaryExpr& binaryExpr) override;
+	virtual void        visit(AST::TrinaryExpr& trinaryExpr) override;
+	virtual void        visit(AST::TerminalExpr& terminalExpr) override;
+	virtual void        visit(AST::CallExpr& callExpr) override;
+	virtual void        visit(AST::FunctionExpr& functionExpr) override;
+	virtual void        visit(AST::TableExpr& tableExpr) override;
 	
 private:
 	typedef std::vector<AST::Statement*> LoopStack;
-	
-	                    Analyzer(const Analyzer&);
-	const Analyzer&     operator=(const Analyzer&);
 
-	const bool          safeVisit_(AST::Base* host);
+	bool                safeVisit_(AST::Base* host);
 
 	ScopeManager        scopeManager_;
 };
 
-} // The end of namespace "cmm"
+} // namespace "cmm"
 
 #endif

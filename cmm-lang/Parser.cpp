@@ -16,52 +16,52 @@ namespace cmm
 namespace
 {
 
-inline const bool isAssignOp(Token& t)
+inline const bool isAssignOp(const Token& t)
 {
 	return (t.type() >= Token::ASSIGN) && (t.type() <= Token::ASSIGN_XOR);
 }
 
-inline const bool isEqualityOp(Token& t)
+inline const bool isEqualityOp(const Token& t)
 {
 	return (t.type() == Token::LOGIC_EQ) || (t.type() == Token::LOGIC_NOTEQ);
 }
 
-inline const bool isRelationalOp(Token& t)
+inline const bool isRelationalOp(const Token& t)
 {
 	return (t.type() >= Token::LOGIC_GREATER) && (t.type() <= Token::LOGIC_LE);
 }
 
-inline const bool isShiftOp(Token& t)
+inline const bool isShiftOp(const Token& t)
 {
 	return (t.type() == Token::BIT_SL) || (t.type() == Token::BIT_SR);
 }
 
-inline const bool isAdditiveOp(Token& t)
+inline const bool isAdditiveOp(const Token& t)
 {
 	return (t.type() == Token::ARITH_ADD) || (t.type() == Token::ARITH_SUB);
 }
 
-inline const bool isMultiplicativeOp(Token& t)
+inline const bool isMultiplicativeOp(const Token& t)
 {
 	return (t.type() == Token::ARITH_MUL) || (t.type() == Token::ARITH_DIV) ||
 	       (t.type() == Token::ARITH_MOD);
 }
 
-inline const bool isUnaryOp(Token& t)
+inline const bool isUnaryOp(const Token& t)
 {
 	return (t.type() == Token::ARITH_ADD) || (t.type() == Token::ARITH_SUB) ||
 	       (t.type() == Token::ARITH_INC) || (t.type() == Token::ARITH_DEC) ||
 	       (t.type() == Token::BIT_NOT) || (t.type() == Token::LOGIC_NOT);
 }
 
-inline const bool isPostfixOp(Token& t)
+inline const bool isPostfixOp(const Token& t)
 {
 	return (t.type() == Token::LEFTBRACKET) || (t.type() == Token::LEFTPAREN) ||
 	       (t.type() == Token::ARITH_INC) || (t.type() == Token::ARITH_DEC);
 }
 
 
-const AST::BinaryExpr::Operator TokenToBinaryOp(Token& t)
+const AST::BinaryExpr::Operator TokenToBinaryOp(const Token& t)
 {
 	switch (t.type())
 	{
@@ -93,7 +93,7 @@ const AST::BinaryExpr::Operator TokenToBinaryOp(Token& t)
 	}
 }
 
-const AST::UnaryExpr::Operator TokenToPrefixOp(Token& t)
+const AST::UnaryExpr::Operator TokenToPrefixOp(const Token& t)
 {
 	switch (t.type())
 	{
@@ -470,7 +470,7 @@ StatementPtr Parser::parseVariable_()
 }
 
 
-StmtSequencePtr Parser::parseStmtSequence_(const Token::Type delimiter)
+StmtSequencePtr Parser::parseStmtSequence_(Token::Type delimiter)
 {
 	StmtSequencePtr stmtSeq(new AST::StmtSequence);
 
@@ -852,7 +852,7 @@ ExpressionPtr Parser::parsePrimaryExpr_()
 	}
 }
 
-ExpressionPtr Parser::newIntegerTerminal_(const uint32_t integer)
+ExpressionPtr Parser::newIntegerTerminal_(uint32_t integer)
 {
 	wchar_t buffer[10];
 #pragma warning (push)
@@ -961,4 +961,4 @@ void Parser::parseCallExpr_(AST::CallExpr* callExpr)
 }
 
 
-} // The end of namespace "cmm"
+} // namespace "cmm"

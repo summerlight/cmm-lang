@@ -27,4 +27,4 @@ const std::wstring& Error::errorStr() const
 	return errorMsg_;
 }
 
-} // The end of namespace "cmm"
+} // namespace "cmm"

@@ -26,7 +26,7 @@ Compiler::~Compiler()
 {
 }
 
-Ref<Prototype> Compiler::compile(const wchar_t code[], const bool drawTree, const bool printCode)
+Ref<Prototype> Compiler::compile(const wchar_t code[], bool drawTree, bool printCode)
 {
 	Parser parser(code);
 	FunctionDefPtr rootFunction = parser.parse();
@@ -68,4 +68,4 @@ std::wstring& Compiler::byteCode()
 	return codeString_;
 }
 
-} // The end of namespace "cmm"
+} // namespace "cmm"

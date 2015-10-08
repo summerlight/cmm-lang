@@ -78,7 +78,7 @@ Ref<Prototype> CodeGenerator::createPrototype(AST::FunctionDefinition& functionD
 }
 
 
-const bool CodeGenerator::safeVisit_(AST::Base* host)
+bool CodeGenerator::safeVisit_(AST::Base* host)
 {
 	if (host == nullptr) {
 		return false;
@@ -89,7 +89,7 @@ const bool CodeGenerator::safeVisit_(AST::Base* host)
 }
 
 
-const uint32_t CodeGenerator::addConstant_(const Variable& constant)
+uint32_t CodeGenerator::addConstant_(const Variable& constant)
 {
 	auto &constTable = prototype_->constants_;
 	Variable::StrictEqual isEqual;
@@ -134,7 +134,7 @@ inline void CodeGenerator::appendCode_(const Instruction::Opcode op, const int32
 	code.push_back(Instruction(op, operand1, operand2, operand3));
 }
 
-inline const uint32_t CodeGenerator::nextOffset_()
+inline uint32_t CodeGenerator::nextOffset_()
 {
 	auto &code = prototype_->code_;
 	return code.size();
@@ -152,7 +152,7 @@ inline const uint32_t CodeGenerator::nextOffset_()
  *  - a newly allocated register will store the result of operation and be returned
  *  - GETCONST 0 and a corresponding unary instruction will be appended to the instruction vector
  */
-void CodeGenerator::appendUnaryOp_(AST::UnaryExpr& unaryExpr, const Instruction::Opcode op)
+void CodeGenerator::appendUnaryOp_(AST::UnaryExpr& unaryExpr, Instruction::Opcode op)
 {
 	AST::Expression &firstExpr = *unaryExpr.first;
 
@@ -184,7 +184,7 @@ void CodeGenerator::appendUnaryOp_(AST::UnaryExpr& unaryExpr, const Instruction:
  *  - a newly allocated register will store the result of operation and be returned
  *  - GETCONST 1 and a corresponding binary, store instruction will be appended to the instruction vector
  */
-void CodeGenerator::appendPrefixOp_(AST::UnaryExpr& unaryExpr, const Instruction::Opcode op)
+void CodeGenerator::appendPrefixOp_(AST::UnaryExpr& unaryExpr, Instruction::Opcode op)
 {
 	AST::Expression &firstExpr = *unaryExpr.first;
 
@@ -223,7 +223,7 @@ void CodeGenerator::appendPrefixOp_(AST::UnaryExpr& unaryExpr, const Instruction
  *  - the result of postfix operation will be stored in the original register
  *  - GETCONST 1 and a corresponding binary, store instruction will be appended to the instruction vector
  */
-void CodeGenerator::appendPostfixOp_(AST::UnaryExpr& unaryExpr, const Instruction::Opcode op)
+void CodeGenerator::appendPostfixOp_(AST::UnaryExpr& unaryExpr, Instruction::Opcode op)
 {
 	AST::Expression &firstExpr = *unaryExpr.first;
 
@@ -267,7 +267,7 @@ void CodeGenerator::appendPostfixOp_(AST::UnaryExpr& unaryExpr, const Instructio
  *  - a newly allocated register will store the result of operation value and be returned
  *  - a corresponding binary instruction will be appended to the instruction vector
  */
-void CodeGenerator::appendBinaryOp_(AST::BinaryExpr& binaryExpr, const Instruction::Opcode op, const bool inverted)
+void CodeGenerator::appendBinaryOp_(AST::BinaryExpr& binaryExpr, Instruction::Opcode op, bool inverted)
 {
 	AST::Expression &firstExpr = *binaryExpr.first;
 	AST::Expression &secondExpr = *binaryExpr.second;
@@ -307,7 +307,7 @@ void CodeGenerator::appendBinaryOp_(AST::BinaryExpr& binaryExpr, const Instructi
  *  - a newly allocated register will store the result of operation and be returned
  *  - a corresponding binary instruction will be appended to the instruction vector
  */
-void CodeGenerator::appendAssignOp_(AST::BinaryExpr& binaryExpr, const Instruction::Opcode op)
+void CodeGenerator::appendAssignOp_(AST::BinaryExpr& binaryExpr, Instruction::Opcode op)
 {
 	AST::Expression &firstExpr = *binaryExpr.first;
 	AST::Expression &secondExpr = *binaryExpr.second;
@@ -1014,7 +1014,7 @@ inline LabelManager::~LabelManager()
 {
 }
 
-inline const uint32_t LabelManager::newLabel(const uint32_t offset)
+inline uint32_t LabelManager::newLabel(const uint32_t offset)
 {
 	labelList_.push_back(offset);
 	return labelList_.size() - 1;
@@ -1025,7 +1025,7 @@ inline void LabelManager::setOffset(const uint32_t labelNum, const uint32_t offs
 	labelList_[labelNum] = offset;
 }
 
-inline const uint32_t LabelManager::getOffset(const uint32_t labelNum)
+inline uint32_t LabelManager::getOffset(const uint32_t labelNum)
 {
 	return labelList_[labelNum];
 }
@@ -1047,7 +1047,7 @@ Register::~Register()
 }
 
 
-const uint32_t Register::allocate()
+uint32_t Register::allocate()
 {
 	if (maxNumRegister_ <= numRegister_) {
 		maxNumRegister_++;
@@ -1073,7 +1073,7 @@ void Register::deallocate(const AST::Expression& expr)
 	}
 }
 
-void Register::deallocate(const uint32_t registerOffset)
+void Register::deallocate(uint32_t registerOffset)
 {
 	assert(registerOffset == numRegister_ - 1);
 	numRegister_--;
@@ -1085,11 +1085,11 @@ void Register::reset()
 	numRegister_ = 0;
 }
 
-const uint32_t Register::maxSize()
+uint32_t Register::maxSize()
 {
 	return maxNumRegister_;
 }
 
 
 
-} // The end of namespace "cmm"
+} // namespace "cmm"

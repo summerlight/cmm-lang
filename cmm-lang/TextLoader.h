@@ -14,16 +14,15 @@ class TextLoader
 public:
 	explicit          TextLoader();
 	                  ~TextLoader();
+	                  TextLoader(const TextLoader&) = delete;
+	const TextLoader& operator=(const TextLoader&) = delete;
 
-	const bool        load(const wchar_t FileName[]);
+	bool              load(const wchar_t FileName[]);
 	const wchar_t*    string();
 	void              clear();
 
 private:
-	                  TextLoader(const TextLoader&);
-	const TextLoader& operator=(const TextLoader&);
-
-	const bool        loadFileToBuffer_(const wchar_t FileName[]);
+	bool              loadFileToBuffer_(const wchar_t FileName[]);
 	void              checkFileMode_();
 	void              bigEndianToLittleEndian_();
 	void              convertToUTF16_();

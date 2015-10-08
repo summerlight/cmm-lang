@@ -103,7 +103,9 @@ public:
 	};
 
 	explicit                    Token() { /* Intentionally empty function*/ };
-	                            Token(const Type type, const wstring& lex, const Position& pos);
+	                            Token(const Type type, const wstring& lex, const Position& pos);                                
+	                            Token(const Token&) = delete;
+	const Token&                operator=(const Token&) = delete;
 
 	                            Token(const Token&& token);
 	const Token&                operator=(const Token&& token);
@@ -111,23 +113,20 @@ public:
 	const Position&             pos() const;
 	const std::wstring&         lexeme() const;
 	const std::wstring&         name() const;
-	const Type                  type() const;
+	Type                        type() const;
 
-	const bool                  isAssignOp() const;
-	const bool                  isEqualityOp() const;
-	const bool                  isRelationalOp() const;
-	const bool                  isShiftOp() const;
-	const bool                  isAdditiveOp() const;
-	const bool                  isMultiplicativeOp() const;
-	const bool                  isUnaryOp() const;
-	const bool                  isPostfixOp() const;
+	bool                        isAssignOp() const;
+	bool                        isEqualityOp() const;
+	bool                        isRelationalOp() const;
+	bool                        isShiftOp() const;
+	bool                        isAdditiveOp() const;
+	bool                        isMultiplicativeOp() const;
+	bool                        isUnaryOp() const;
+	bool                        isPostfixOp() const;
 
 	static const std::wstring&  lexeme(Type t);
 
 private:
-	                            Token(const Token&);
-	const Token&                operator=(const Token&);
-
 	static const std::wstring   TokenNameTable_[];
 	static const std::wstring   LexemeTable_[];
 
@@ -171,7 +170,7 @@ inline const std::wstring& Token::name() const
 	return TokenNameTable_[type_];
 }
 
-inline const Token::Type Token::type() const
+inline Token::Type Token::type() const
 {
 	return type_;
 }
@@ -181,49 +180,49 @@ inline const std::wstring& Token::lexeme(Type type)
 	return LexemeTable_[type];
 }
 
-inline const bool Token::isAssignOp() const
+inline bool Token::isAssignOp() const
 {
 	return (type_ >= ASSIGN) && (type_ <= ASSIGN_XOR);
 }
 
-inline const bool Token::isEqualityOp() const
+inline bool Token::isEqualityOp() const
 {
 	return (type_ == LOGIC_EQ) || (type_ == LOGIC_NOTEQ);
 }
 
-inline const bool Token::isRelationalOp() const
+inline bool Token::isRelationalOp() const
 {
 	return (type_ >= LOGIC_GREATER) || (type_ <= LOGIC_LE);
 }
 
-inline const bool Token::isShiftOp() const
+inline bool Token::isShiftOp() const
 {
 	return (type_ == BIT_SL) || (type_ == BIT_SR);
 }
 
-inline const bool Token::isAdditiveOp() const
+inline bool Token::isAdditiveOp() const
 {
 	return (type_ == ARITH_ADD) || (type_ == ARITH_SUB);
 }
 
-inline const bool Token::isMultiplicativeOp() const
+inline bool Token::isMultiplicativeOp() const
 {
 	return (type_ == ARITH_MUL) || (type_ == ARITH_DIV);
 }
 
-inline const bool Token::isUnaryOp() const
+inline bool Token::isUnaryOp() const
 {
 	return (type_ == ARITH_ADD) || (type_ == ARITH_SUB) ||
 	       (type_ == ARITH_INC) || (type_ == ARITH_DEC) ||
 	       (type_ == BIT_NOT) || (type_ == LOGIC_NOT);
 }
 
-inline const bool Token::isPostfixOp() const
+inline bool Token::isPostfixOp() const
 {
 	return (type_ == LEFTBRACKET) || (type_ == LEFTPAREN) ||
 	       (type_ == ARITH_INC) || (type_ == ARITH_DEC);
 }
 
-} // The end of namespace "cmm"
+} // namespace"cmm"
 
 #endif

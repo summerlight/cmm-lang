@@ -28,7 +28,7 @@ std::wstring& ASTDrawer::draw(AST::FunctionDefinition& rootFunction)
 
 
 
-inline const bool ASTDrawer::safeVisit_(AST::Base* host)
+inline bool ASTDrawer::safeVisit_(AST::Base* host)
 {
 	if (host == nullptr) {
 		return false;
@@ -66,7 +66,7 @@ void ASTDrawer::appendBaseInfo_(const wchar_t nodeName[], const AST::Base& node)
 	appendFlagInfo_(node);
 }
 
-void ASTDrawer::appendNumberInfo_(const wchar_t format[], const uint32_t number)
+void ASTDrawer::appendNumberInfo_(const wchar_t format[], uint32_t number)
 {
 	if (number != UINT32_MAX) {
 		appendTreeLine_();
@@ -142,7 +142,7 @@ void ASTDrawer::appendTreeLine_()
 }
 
 
-void ASTDrawer::pushTreeLine_(const bool isLine)
+void ASTDrawer::pushTreeLine_(bool isLine)
 {
 	updateTreeLine_();
 
@@ -181,7 +181,7 @@ void ASTDrawer::popTreeLine_()
 	treeLine_.pop_back();
 }
 
-void ASTDrawer::turnOnBranchFlag_(const bool holding)
+void ASTDrawer::turnOnBranchFlag_(bool holding)
 {
 	branching_ = true;
 	holding_ = holding;
@@ -563,4 +563,4 @@ void ASTDrawer::visit(AST::TableExpr& tableExpr)
 
 
 
-} // The end of namespace "cmm"
+} // namespace "cmm"

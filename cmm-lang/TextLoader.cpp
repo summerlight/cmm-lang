@@ -10,7 +10,7 @@ TextLoader::TextLoader()
 {
 }
 
-const bool TextLoader::load(const wchar_t FileName[])
+bool TextLoader::load(const wchar_t FileName[])
 {
 	clear();
 
@@ -24,7 +24,7 @@ const bool TextLoader::load(const wchar_t FileName[])
 	return true;
 }
 
-const bool TextLoader::loadFileToBuffer_(const wchar_t FileName[])
+bool TextLoader::loadFileToBuffer_(const wchar_t FileName[])
 {
 	ifstream file(FileName, ios_base::binary | ios_base::in);
 

@@ -188,7 +188,7 @@ void IfElseStmt::accept(Visitor& visitor)
 
 
 
-ReturnStmt::ReturnStmt(const Type t, ExpressionPtr returnExpr)
+ReturnStmt::ReturnStmt(Type t, ExpressionPtr returnExpr)
 : type(t), returnExpr(std::move(returnExpr))
 {
 }
@@ -204,7 +204,7 @@ void ReturnStmt::accept(Visitor& visitor)
 
 
 
-JumpStmt::JumpStmt(const Type t)
+JumpStmt::JumpStmt(Type t)
 : type(t), correspondingLoop(nullptr)
 {
 }
@@ -253,7 +253,7 @@ void ExpressionStmt::accept(Visitor& visitor)
 
 
 
-UnaryExpr::UnaryExpr(const Operator op, ExpressionPtr first)
+UnaryExpr::UnaryExpr(Operator op, ExpressionPtr first)
 : op(op), first(std::move(first))
 {
 }
@@ -269,7 +269,7 @@ void UnaryExpr::accept(Visitor& visitor)
 
 
 
-BinaryExpr::BinaryExpr(const Operator op, ExpressionPtr first, ExpressionPtr second)
+BinaryExpr::BinaryExpr(Operator op, ExpressionPtr first, ExpressionPtr second)
 : op(op), first(std::move(first)), second(std::move(second))
 {
 }
@@ -285,7 +285,7 @@ void BinaryExpr::accept(Visitor& visitor)
 
 
 
-TrinaryExpr::TrinaryExpr(const Operator op, ExpressionPtr first, ExpressionPtr second, ExpressionPtr third)
+TrinaryExpr::TrinaryExpr(Operator op, ExpressionPtr first, ExpressionPtr second, ExpressionPtr third)
 : op(op), first(std::move(first)), second(std::move(second)), third(std::move(third))
 {
 }
@@ -349,7 +349,7 @@ void FunctionExpr::accept(Visitor& visitor)
 
 
 
-TableExpr::TableExpr(const Type t)
+TableExpr::TableExpr( Type t)
 : type(t)
 {
 }
@@ -364,7 +364,7 @@ void TableExpr::accept(Visitor& visitor)
 }
 
 
-} // The end of namespace AST
+} // namespace AST
 
 
-} // The end of namespace "cmm"
+} // namespace "cmm"

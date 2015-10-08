@@ -98,5 +98,5 @@ struct Node
 	Node  *next;
 };
 
-} // The end of namespace "cmm"
+} // namespace"cmm"
 #endif

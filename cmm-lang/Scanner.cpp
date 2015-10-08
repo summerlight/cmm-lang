@@ -11,7 +11,7 @@
 
 namespace {
 
-const inline bool isPunctuator(const wchar_t c)
+inline bool isPunctuator(wchar_t c)
 {
 	return ((c >= 0x21) && (c <= 0x2f)) || // ! " # $ % & ' ( ) * + , - . /
 	       ((c >= 0x3a) && (c <= 0x40)) || // : ; < = > ? @
@@ -19,19 +19,19 @@ const inline bool isPunctuator(const wchar_t c)
 	       ((c >= 0x7b) && (c <= 0x7e));   // { | } ~
 }
 
-const inline bool isDigit(const wchar_t c)
+inline bool isDigit(wchar_t c)
 {
 	return ((c >= 0x30) && (c <= 0x39)); // 0 ~ 9
 }
 
-const inline bool isHexadecimal(const wchar_t c)
+inline bool isHexadecimal(wchar_t c)
 {
 	return ((c >= 0x30) && (c <= 0x39)) || // 0 ~ 9
 	       ((c >= 0x41) && (c <= 0x46)) || // A ~ F
 	       ((c >= 0x61) && (c <= 0x66));   // a ~ f
 }
 
-const inline bool isOctal(const wchar_t c)
+inline bool isOctal(wchar_t c)
 {
 	return ((c >= 0x30) && (c <= 0x37)); // 0 ~ 7
 }
@@ -51,7 +51,7 @@ Scanner::~Scanner()
 {
 }
 
-const Token Scanner::scan()
+Token Scanner::scan()
 {
 	if (code_ == nullptr) {
 		return Token(Token::ERR, L"", Position(0, 0, 0, 0));
@@ -69,13 +69,13 @@ const Token Scanner::scan()
 }
 
 
-const bool Scanner::load(const wchar_t code[])
+bool Scanner::load(const wchar_t code[])
 {
 	return load(code, wcslen(code));
 }
 
 
-const bool Scanner::load(const wchar_t code[], const uint32_t codeSize)
+bool Scanner::load(const wchar_t code[], uint32_t codeSize)
 {
 	code_ = code;
 	codeSize_ = codeSize;
@@ -87,12 +87,12 @@ const bool Scanner::load(const wchar_t code[], const uint32_t codeSize)
 }
 
 
-inline const wchar_t Scanner::currentChar_()
+inline wchar_t Scanner::currentChar_()
 {
 	return (currentOffset_ < codeSize_) ? code_[currentOffset_] : 0;
 }
 
-inline const wchar_t Scanner::lookForward_(const uint32_t n)
+inline wchar_t Scanner::lookForward_(uint32_t n)
 {
 	return (currentOffset_ + n < codeSize_) ? code_[currentOffset_ + n] : 0;
 }
@@ -173,7 +173,7 @@ void Scanner::skipBlankAndComment_()
 	isScanning_ = true;
 }
 
-const Token::Type Scanner::scanToken_()
+Token::Type Scanner::scanToken_()
 {
 	if(!isPunctuator(currentChar_()) && iswgraph(currentChar_())) {
 		if(isDigit(currentChar_())) {
@@ -389,7 +389,7 @@ const Token::Type Scanner::scanToken_()
 	}
 }
 
-const Token::Type Scanner::classifyKeyword_()
+Token::Type Scanner::classifyKeyword_()
 {
 	// Currently, the beginning of integer casted keyword Token enumeration is null
 	// If the beginning keyword enumeration is changed, then this routine should be also modified
@@ -400,7 +400,7 @@ const Token::Type Scanner::classifyKeyword_()
 	return Token::IDENTIFIER;
 }
 
-const Token::Type Scanner::classifyNumber_()
+Token::Type Scanner::classifyNumber_()
 {
 	if (currentChar_() == L'+' || currentChar_() == L'-') {
 		processCurrentChar_();
@@ -435,7 +435,7 @@ const Token::Type Scanner::classifyNumber_()
 	}
 }
 
-const Token::Type Scanner::scanFloat_(const uint32_t entryState)
+Token::Type Scanner::scanFloat_(const uint32_t entryState)
 {
 	uint32_t state = entryState;
 	assert(entryState == 0 || entryState == 3);
@@ -513,7 +513,7 @@ const Token::Type Scanner::scanFloat_(const uint32_t entryState)
 }
 
 
-const bool Scanner::processEscapeSequence_()
+bool Scanner::processEscapeSequence_()
 {
 	assert(currentChar_() == L'\\');
 
@@ -543,7 +543,7 @@ const bool Scanner::processEscapeSequence_()
 		
 		if (isHexadecimal(currentChar_())) {
 			wstring codeNumber;
-			char32_t character; // number representation of a unicode character
+            uint32_t character; // numeric representation of a unicode character
 			do {
 				codeNumber.push_back(currentChar_());
 				skipCurrentChar_();
@@ -564,7 +564,7 @@ const bool Scanner::processEscapeSequence_()
 	}
 }
 
-const Token::Type Scanner::processString_()
+Token::Type Scanner::processString_()
 {
 	skipCurrentChar_();
 
@@ -591,4 +591,4 @@ const Token::Type Scanner::processString_()
 	}
 }
 
-} // The end of namespace "cmm"
+} // namespace "cmm"

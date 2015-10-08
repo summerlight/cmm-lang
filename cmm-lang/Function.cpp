@@ -14,7 +14,7 @@
 namespace cmm
 {
 
-Function::Function(const Ref<Prototype> prototype, Ref<Closure> upper, ObjectManager* manager)
+Function::Function(Ref<Prototype> prototype, Ref<Closure> upper, ObjectManager* manager)
 : Object(manager), prototype_(prototype), upperClosure_(upper)
 {
 	assert(prototype.get() != nullptr);
@@ -49,7 +49,7 @@ Closure::~Closure()
 
 
 
-Variable& Closure::upValue(const uint32_t functionLevel, const uint32_t offset)
+Variable& Closure::upValue(uint32_t functionLevel, uint32_t offset)
 {
 	Ref<Closure> targetClosure = this;
 
@@ -79,4 +79,4 @@ void Closure::forEachObject_(const std::function<void(const Object&)>& func)
 
 
 
-} // The end of namespace "cmm"
+} // namespace "cmm"
